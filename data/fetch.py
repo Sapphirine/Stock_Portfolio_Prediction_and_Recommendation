@@ -30,4 +30,4 @@ def get_ticker_list():
 
 
 if __name__ == '__main__':
-    download_tickers()
+    get_ticker_list()

@@ -42,6 +42,8 @@ def linear_regression(ticker):
         return True
     elif predict_close_value <= today_close_value <= yesterday_close_value:
         return True
+    elif yesterday_close_value <= predict_close_value <= today_close_value:
+        return True
     else:
         return False
 
@@ -49,17 +51,22 @@ def linear_regression(ticker):
 def get_accuracy():
     true_positive = 0
     total = 0
+    f = open('result_lr.csv', 'w')
     with open('../data/ticker_list.csv') as csvfile:
         reader = csv.reader(csvfile, delimiter=',', quotechar='|')
+
         for row in reader:
             print(row[0])
             total += 1
             flag = linear_regression(row[0])
             if flag is True:
                 true_positive += 1
+                f.write(row[0] + '\n')
     print(true_positive / total)
+    f.close()
     return true_positive / total
 
 
 if __name__ == '__main__':
-    get_accuracy()
+    linear_regression("AAPL")
+    # get_accuracy()

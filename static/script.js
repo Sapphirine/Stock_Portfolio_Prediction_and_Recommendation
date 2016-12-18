@@ -14,8 +14,30 @@ $(document).ready(function () {
                 $('#errorAlert').text(data.error).show();
                 $('#successAlert').hide();
             } else {
+                var JSONObject = JSON.parse(data);
                 $('#errorAlert').hide();
-                $('#successAlert').text(data.ticker).show();
+                $('#successAlert').show();
+                $('#successAlert').innerHTML = '';
+                var el = document.getElementById('successAlert');
+
+                while (el.firstChild) el.removeChild(el.firstChild);
+                var count = 0;
+                for (var key in JSONObject) {
+                    count = count + 1;
+                    if (JSONObject.hasOwnProperty(key)) {
+                        var val = JSONObject[key];
+                        var innerDiv = document.createElement('div');
+                        innerDiv.id = "success_" + key;
+                        innerDiv.innerHTML = val;
+                        $('#successAlert').append(innerDiv);
+                    }
+                }
+                // if (count == 0) {
+                //     var innerDiv = document.createElement('div');
+                //     innerDiv.id = "success_0";
+                //     innerDiv.innerHTML = "Don't buy ";
+                //     $('#successAlert').append(innerDiv);
+                // }
             }
         });
         event.preventDefault();
